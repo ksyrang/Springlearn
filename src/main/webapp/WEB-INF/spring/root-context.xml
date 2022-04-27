@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xmlns:mybatis-spring="http://mybatis.org/schema/mybatis-spring"
+	xsi:schemaLocation="http://mybatis.org/schema/mybatis-spring http://mybatis.org/schema/mybatis-spring-1.2.xsd
+		http://www.springframework.org/schema/beans https://www.springframework.org/schema/beans/spring-beans.xsd">
+	
+	<!-- Root Context: defines shared resources visible to all other web components -->
+	<!-- 스프린 컨테이너이며 하기 추가된 것들을 관리하다. -->
+<!-- 		
+		히카리 커넥션 풀을 빈으로 등록 == DAO 인스턴스할때 넣던 사용할 DB정보를 넣는것
+		<bean id="hikariConfig" class="com.zaxxer.hikari.HikariConfig">
+			setter에 넣어줄 값
+			<property name="driverClassName" value="oracle.jdbc.driver.OracleDriver"/>
+			<property name="jdbcUrl" value="jdbc:oracle:thin:@localhost:1521:xe"/>
+			<property name="username" value="spdb"/>
+			<property name="password" value="spdb1"/>
+		</bean>커넥션 풀
+		data 소스 등록 : 히카리 커넥션 풀 관리를 위함
+		<bean id="dataSource" class="com.zaxxer.hikari.HikariDataSource">
+				<constructor-arg ref="hikariConfig"/>
+		</bean>
+		데이터소스를 마이바티스에 등록 및 xml 위치를 설정
+		<bean id="sqlSessionFactoty" class="org.mybatis.spring.SqlSessionFactoryBean">
+			<property name="dataSource" ref="dataSource"/>
+			<property name="mapperLocations" value="classpath:/mappers/**/*Mapper.xml"/>*xxx.xml은 xml파일명이 xxx로 끝나는 것을 인식하겠다.
+		</bean>
+		마이바티스가 어디부터 스캔해서 mapper에게 알려줘야 하기 때문에 스캔 시작위치를 지정해 주는 것
+		<mybatis-spring:scan base-package="com.care.spring_db.member.dao/"/> -->
+</beans>
+<!-- 
+1. Spring용 DAO 클래서 선언(interface 클래스)
+[사용한 메소드 함수 선언]
+2. root-context에서 DB연결을 위한 정의를 해줌
+[ DB 경로, DB 사용자 정보, DB 제어연동(mybatis),DAO 내용(mapping)위치 지정, DAO interface위치 설정]
+3. mappers내부의 mapper.xml에서 DAO 메소드 함수들의 행동 내용 작성
+ -->

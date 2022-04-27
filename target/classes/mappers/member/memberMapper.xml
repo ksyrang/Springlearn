@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.care.spring_db.member.dao.IMemberDAO">
+<!-- 작성할 내용: 사용할 인터페이스 위치랑 동작할 내용을 입력   -->
+	<insert id="insert" parameterType="com.care.spring_db.member.MemberDTO">
+	<!-- id insert 클래스내 메소드 명, type은 매개변수 자료형의 클래스경로 -->
+		INSERT INTO basic VALUES(#{id},#{pw},#{name},#{email})
+		<!-- #{xx} = xx = ?와 동일한 결과를 가져옴 -->
+	</insert><!-- 메소드 이름은 DAO의 이름과 통일 시켜 사용성 용의토록하자 -->
+	<!-- resultmap = 리턴 자료형 및 자료형내 변수 매칭 -->
+	
+	<resultMap type="com.care.spring_db.member.MemberDTO" id="member">
+			<!-- property = "memberDTO의 변수명" column ="DB에서 변수명" -->
+			<result property="id" column="id"/>
+			<result property="pw" column="pw"/>
+			<result property="name" column="name"/>
+			<result property="email" column="email"/>
+	</resultMap>
+	
+	<select id="selectId" resultMap="member" parameterType="String"><!-- 매개변수의 자료형도 꼭 써줘야 한다. : parameterType -->
+		<!-- resultmap을 보고 DB에서 리턴된 값을 service로 리턴할 변수에 매칭해 줘라 -->
+		SELECT * FROM basic WHERE id=#{id}
+	</select>
+	
+	<select id="selectAll" resultMap="member">
+		SELECT * FROM basic
+	</select>
+	
+	<update id="updateMem" parameterType="com.care.spring_db.member.MemberDTO">
+		<!-- 조건없이 넣을 경우 UPDATE basic SET pw=#{pw}, name=#{name}, email=#{email} WHERE id = #{id} -->
+		UPDATE basic
+			<set>
+				<if test="pw != ''">pw=#{pw},</if>
+				<if test="name != ''">name=#{name},</if>			
+				<if test="email != ''">email=#{email},</if>
+			</set>
+		WHERE id=#{id}
+	</update>
+	
+	<delete id="deleteMem" parameterType="com.care.spring_db.member.MemberDTO" >
+		DELETE FROM basic WHERE id=#{id}
+	</delete>
+	
+</mapper>

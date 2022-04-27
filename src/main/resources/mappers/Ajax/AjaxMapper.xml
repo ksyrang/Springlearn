@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.care.spring_db.ajax.IAjaxDAO">
+
+	<insert id="insert" parameterType="com.care.spring_db.ajax.AjaxDTO">
+		INSERT INTO ajax VALUES(#{title},#{artist},#{price})
+	</insert>
+	
+	<select id="titleAll" resultType="com.care.spring_db.ajax.AjaxDTO">
+		SELECT * FROM ajax
+	</select>
+	
+	<select id="search" resultType="com.care.spring_db.ajax.AjaxDTO">
+		SELECT * FROM ajax WHERE title like '%'||#{searchData}||'%'
+	</select>
+	<select id="searchArtist" resultType="com.care.spring_db.ajax.AjaxDTO">
+		SELECT * FROM ajax WHERE artist like '%'||#{searchData}||'%'
+	</select>
+	<select id="searchPrice" resultType="com.care.spring_db.ajax.AjaxDTO">
+		SELECT * FROM ajax WHERE price like '%'||#{searchData}||'%'
+	</select>
+	<!-- hashmap 자체에서 키의 이름이 같으면 자동으로 키의 값을 가져 온다. -->
+	<select id="searchFilter" resultType="com.care.spring_db.ajax.AjaxDTO" parameterType="HashMap">
+		SELECT * FROM ajax 
+		<where>
+			<if test="searchTitle.equals('title')">title like '%'||#{searchData}||'%'</if>
+			<if test="searchTitle.equals('artist')">artist like '%'||#{searchData}||'%'</if>
+			<if test="searchTitle.equals('price')">price like '%'||#{searchData}||'%'</if>
+		</where>
+	</select>
+	
+	<!-- || == java에서의 +와 같은 것 -> 즉 문자열을 묶은 것 -->
+	
+</mapper>
